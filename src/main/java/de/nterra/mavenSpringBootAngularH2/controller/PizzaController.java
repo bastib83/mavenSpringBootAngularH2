@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class PizzaController {
@@ -20,7 +20,7 @@ public class PizzaController {
     PizzaRepository pizzaRepository;
 
     @GetMapping("/pizzas")
-    public ResponseEntity<List<Pizza>> getAllTutorials(@RequestParam(required = false) String title) {
+    public ResponseEntity<List<Pizza>> getAllPizzas(@RequestParam(required = false) String title) {
         try {
             List<Pizza> pizzas = new ArrayList<Pizza>();
 
@@ -40,44 +40,44 @@ public class PizzaController {
     }
 
     @GetMapping("/pizzas/{id}")
-    public ResponseEntity<Pizza> getTutorialById(@PathVariable("id") long id) {
-        Optional<Pizza> tutorialData = pizzaRepository.findById(id);
+    public ResponseEntity<Pizza> getPizzaById(@PathVariable("id") long id) {
+        Optional<Pizza> pizzaData = pizzaRepository.findById(id);
 
-        if (tutorialData.isPresent()) {
-            return new ResponseEntity<>(tutorialData.get(), HttpStatus.OK);
+        if (pizzaData.isPresent()) {
+            return new ResponseEntity<>(pizzaData.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("/pizzas")
-    public ResponseEntity<Pizza> createTutorial(@RequestBody Pizza tutorial) {
+    public ResponseEntity<Pizza> createPizza(@RequestBody Pizza pizza) {
         try {
-            Pizza _tutorial = pizzaRepository
-                    .save(new Pizza(tutorial.getTitle(), tutorial.getDescription(), tutorial.getPrice(), false));
-            return new ResponseEntity<>(_tutorial, HttpStatus.CREATED);
+            Pizza _pizza = pizzaRepository
+                    .save(new Pizza(pizza.getTitle(), pizza.getDescription(), pizza.getPrice(), false));
+            return new ResponseEntity<>(_pizza, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/pizzas/{id}")
-    public ResponseEntity<Pizza> updateTutorial(@PathVariable("id") long id, @RequestBody Pizza tutorial) {
-        Optional<Pizza> tutorialData = pizzaRepository.findById(id);
+    public ResponseEntity<Pizza> updatePizza(@PathVariable("id") long id, @RequestBody Pizza pizza) {
+        Optional<Pizza> pizzaData = pizzaRepository.findById(id);
 
-        if (tutorialData.isPresent()) {
-            Pizza _tutorial = tutorialData.get();
-            _tutorial.setTitle(tutorial.getTitle());
-            _tutorial.setDescription(tutorial.getDescription());
-            _tutorial.setPublished(tutorial.isPublished());
-            return new ResponseEntity<>(pizzaRepository.save(_tutorial), HttpStatus.OK);
+        if (pizzaData.isPresent()) {
+            Pizza _pizza = pizzaData.get();
+            _pizza.setTitle(pizza.getTitle());
+            _pizza.setDescription(pizza.getDescription());
+            _pizza.setPublished(pizza.isPublished());
+            return new ResponseEntity<>(pizzaRepository.save(_pizza), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/pizzas/{id}")
-    public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
+    public ResponseEntity<HttpStatus> deletePizza(@PathVariable("id") long id) {
         try {
             pizzaRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -87,7 +87,7 @@ public class PizzaController {
     }
 
     @DeleteMapping("/pizzas")
-    public ResponseEntity<HttpStatus> deleteAllTutorials() {
+    public ResponseEntity<HttpStatus> deleteAllPizzas() {
         try {
             pizzaRepository.deleteAll();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -100,12 +100,12 @@ public class PizzaController {
     @GetMapping("/pizzas/published")
     public ResponseEntity<List<Pizza>> findByPublished() {
         try {
-            List<Pizza> tutorials = pizzaRepository.findByPublished(true);
+            List<Pizza> pizzas = pizzaRepository.findByPublished(true);
 
-            if (tutorials.isEmpty()) {
+            if (pizzas.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(tutorials, HttpStatus.OK);
+            return new ResponseEntity<>(pizzas, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
