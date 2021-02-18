@@ -1,0 +1,19 @@
+<br>
+<div class="container bg-light border border-primary rounded">
+    <h2>Pizzamenü:</h2>
+    <div class="row">
+        <div *ngFor="let item of pizzas$ | async" class="col">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top"
+                    src="https://images.unsplash.com/photo-1574126154517-d1e0d89ef734?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60"
+                    alt="Card image cap">
+                <div class="card-body">
+                    <h6 class="card-title">#{{ item.pid }} - {{ item.title }} </h6>
+                    <p class="card-text">{{ item.description }} - {{ item.price | currency :'EUR':true }}</p>
+                    <button (click)="addToCart(item)" class="btn btn-dark">Hinzufügen</button>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>

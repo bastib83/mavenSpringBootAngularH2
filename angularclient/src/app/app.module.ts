@@ -5,10 +5,12 @@ import { ApiModule } from './api.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MenuComponent } from './component/menu/menu.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
