@@ -1,0 +1,37 @@
+<br>
+<div class="container bg-light border border-primary rounded">
+    <br>
+    <h2>WarenKorb:</h2>
+    <div class="row">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Preiß</th>
+                    <th scope="col">+/-</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of cart">
+                    <th scope="row">{{ item.pid }}</th>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.price | currency :'EUR':true }}</td>
+                    <td>
+                        <button (click)="addOne(item)" type="button" class="btn btn-secondary btn-sm">+</button>
+                        <button (click)="removeOne(item)" type="button" class="btn btn-secondary btn-sm">-</button>
+                    </td>
+                </tr>
+                <tr *ngIf="cart.length > 0" class="bg-warning">
+                    <th><b> - </b></th>
+                    <td><b> Summe: </b></td>
+                    <td><b> {{ getSum(cart) | currency :'EUR':true }} </b></td>
+                    <th><b> - </b></th>
+                </tr>
+            </tbody>
+        </table>
+        <button *ngIf="cart.length > 0" (click)="sendOrder(cart)" class="btn btn-block btn-success"><i
+                class="fa fa-caret-square-o-right" aria-hidden="true"></i> Bestellung absenden </button>
+    </div>
+
+</div>
